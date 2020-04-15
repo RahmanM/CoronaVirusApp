@@ -1,0 +1,67 @@
+﻿.wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    row-gap: 15px;
+    font-size: 11px;
+    font-weight: bold;
+    font-family: Arial;
+    column-gap: 10px;
+}
+
+/* Wrapping two columns, one for country and one for Recovery */
+.info-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 10px;
+    border: solid 1px darkgrey;
+    padding: 5px;
+    line-height: 1.9em;
+}
+
+
+/* This is the two colimn for label and numbers for each side   */
+.info {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    padding-left: 5px;
+}
+
+.country {
+    grid-column: 1/4;
+    height: 30px;
+    padding-left: 5px;
+    font-size: 13px
+}
+
+.label {
+    grid-column: 1/3;
+}
+
+.number {
+    grid-column: 4/-1;
+}
+
+.alarm {
+    color: red;
+}
+
+.recover {
+    color: green;
+}
+
+.box-shadow {
+    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, .16);
+}
+
+.country-name{
+    padding-left: 10px;
+}
+
+/*.imaged-div {
+    background-image: url(https://cdn.the-scientist.com/assets/articleNo/67006/hImg/35680/coronavirus-banner-x.png);
+    background-repeat: repeat-y;
+}
+
+.trans-div{
+    opacity: 1;
+}*/
