@@ -24,7 +24,7 @@ export class NavMenu extends Component {
 
     render() {
         return (
-            <header>
+            <header className="my-container">
                 <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
                     <Container>
                         <NavbarBrand tag={Link} to="/">Corona Virus Info</NavbarBrand>

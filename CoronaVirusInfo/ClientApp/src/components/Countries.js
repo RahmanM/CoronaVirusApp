@@ -14,7 +14,10 @@ class Countries extends Component {
     }
 
     componentDidMount() {
-        this.populateWeatherData()
+        if (!this.state.countries || this.state.countries.length <= 0) {
+            this.populateWeatherData()
+        }
+        
     }
 
     async populateWeatherData() {

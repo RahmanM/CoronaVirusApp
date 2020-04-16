@@ -19,6 +19,10 @@ export class Layout extends Component {
         this.setState({search: search})
     }
 
+    // NB: The way to pass parameter to router without re-creating the whole component is via Render
+    // NOTE: Doing so is also possible ->  <Route exact path='/' component={() => <Countries countryFilter={this.state.search} />} />
+    // However, this will recreate the component everytime while will not be ideal if a lot to be rendered
+
     render() {
         return (
             <div className="imaged-div">
@@ -26,7 +30,7 @@ export class Layout extends Component {
                     <NavMenu onCountrySearch={(s) => this.onCountrySearch(s)} />
                     <Container>
                         <Switch>
-                            <Route exact path='/' component={() => <Countries countryFilter={this.state.search} />} />
+                            <Route exact path='/' render={(props) => <Countries {...props} countryFilter={this.state.search} />}  />
                             <Route exact path='/CountryDetails' component={CountryDetails} />
                         </Switch>
                     </Container>

@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import "./style.css";
-import { Line } from "react-chartjs-2";
+import { Line, Doughnut } from "react-chartjs-2";
 import _ from "lodash";
+import Progressbar from "./Progressbar"
+
 
 class CountryDetails extends Component {
 
@@ -12,7 +14,9 @@ class CountryDetails extends Component {
             infectedPerDay: [],
             death: [],
             todaysDeath: [],
-            recovered: []
+            recovered: [],
+            country: {},
+            donutData: {}
         };
     }
 
@@ -27,6 +31,11 @@ class CountryDetails extends Component {
                     (data) => {
 
                         if (data) {
+                            var today = data[data.length - 1].countryCoronaInfo;
+
+                            var country = data[0].countryCoronaInfo;
+
+                            this.setState({ country: country })
 
                             var dates = _.map(data, "date");
                             var totalInfected = _.map(data, s => {
@@ -139,7 +148,7 @@ class CountryDetails extends Component {
                                 labels: dates,
                                 datasets: [
                                     {
-                                        label: "Todays Deaths",
+                                        label: "Deaths per day",
                                         fill: false,
                                         lineTension: 0.1,
                                         backgroundColor: "white",
@@ -198,6 +207,29 @@ class CountryDetails extends Component {
 
                             this.setState({ recovered: recoveredData });
 
+                            // Donut
+                            const donutData = {
+                                labels: [
+                                    'Active',
+                                    'Recovered',
+                                    'Death'
+                                ],
+                                datasets: [{
+                                    data: [today.active, today.recovered, today.deaths],
+                                    backgroundColor: [
+                                        'orange',
+                                        'green',
+                                        'red'
+                                    ],
+                                    hoverBackgroundColor: [
+                                        'orange',
+                                        'green',
+                                        'red'
+                                    ]
+                                }]
+                            };
+
+                            this.setState({ donut: donutData });
                         }
                     },
                     (error) => {
@@ -211,53 +243,82 @@ class CountryDetails extends Component {
 
     }
 
+    toLowerCase = (code) => {
+        return code ? code.toLowerCase() : '';
+    }
+
     render() {
+
+        console.log("render", this.state.country)
+
+        var url =
+            "https://stackblitz.com/files/react-spinner-sample/github/RahmanM/react-spinner-sample/master/loading.gif";
+
+        if (!this.state.country || !this.state.country.countryInfo) {
+            return (<Progressbar show={this.state.country} imageUrl={url} height="90" width="90" alignment="middle" alttext="Loading..." />);
+        }
+
         return (
+
             <div>
-                <div>
-                    <Line
-                        data={this.state.totalInfected}
-                        width={100}
-                        height={250}
-                        options={{ maintainAspectRatio: false }}
-                    />
+
+                <div className="country-detail-info">
+                    <div className="country f32">
+                        <span className={"flag " + this.toLowerCase(this.state.country.countryInfo.iso2)}></span>
+
+                        <span className="country-detail-name">{this.state.country.country} </span>
+
+                    </div>
                 </div>
 
-                <div>
-                    <Line
-                        data={this.state.infectedPerDay}
-                        width={100}
-                        height={250}
-                        options={{ maintainAspectRatio: false }}
-                    />
-                </div>
-
-                <div>
-                    <Line
-                        data={this.state.deaths}
-                        width={100}
-                        height={250}
-                        options={{ maintainAspectRatio: false }}
-                    />
-                </div>
-
-                <div>
-                    <Line
-                        data={this.state.todaysDeath}
-                        width={100}
-                        height={250}
-                        options={{ maintainAspectRatio: false }}
-                    />
-                </div>
+                <div className="widget-wrapper">
 
 
-                <div>
-                    <Line
-                        data={this.state.recovered}
-                        width={100}
-                        height={250}
-                        options={{ maintainAspectRatio: false }}
-                    />
+                    <div className="chart-widget box-shadow">
+                        <Line
+                            data={this.state.totalInfected}
+                            height={250}
+                            options={{ maintainAspectRatio: false }}
+                        />
+                    </div>
+
+                    <div className="chart-widget box-shadow">
+                        <Line
+                            data={this.state.infectedPerDay}
+                            height={250}
+                            options={{ maintainAspectRatio: false }}
+                        />
+                    </div>
+
+                    <div className="chart-widget box-shadow">
+                        <Line
+                            data={this.state.deaths}
+                            height={250}
+                            options={{ maintainAspectRatio: false }}
+                        />
+                    </div>
+
+                    <div className="chart-widget box-shadow">
+                        <Line
+                            data={this.state.todaysDeath}
+                            height={250}
+                            options={{ maintainAspectRatio: false }}
+                        />
+                    </div>
+
+
+                    <div className="chart-widget box-shadow">
+                        <Line
+                            data={this.state.recovered}
+                            height={250}
+                            options={{ maintainAspectRatio: false }}
+                        />
+                    </div>
+
+                    <div className="chart-widget box-shadow">
+                        <Doughnut data={this.state.donut} />
+                    </div>
+
                 </div>
 
             </div>

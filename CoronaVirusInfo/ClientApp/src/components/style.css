@@ -53,15 +53,35 @@
     box-shadow: 0 10px 20px 0 rgba(0, 0, 0, .16);
 }
 
-.country-name{
+.country-detail-info{
+    padding-bottom: 15px;
+}
+
+.country-name {
     padding-left: 10px;
 }
 
-/*.imaged-div {
-    background-image: url(https://cdn.the-scientist.com/assets/articleNo/67006/hImg/35680/coronavirus-banner-x.png);
-    background-repeat: repeat-y;
+.country-detail-name {
+    padding-left: 10px;
+    font-size: 23px;
+    font-weight: bold;
+    vertical-align: bottom;
 }
 
-.trans-div{
-    opacity: 1;
-}*/
+.chart-widget{
+    padding-bottom: 25px;
+}
+
+.widget-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    grid-gap: 15px;
+}
+
+@media screen and (device-width: 360px) and (device-height: 640px) and (-webkit-device-pixel-ratio: 3) {
+    .widget-wrapper {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(355px, 1fr));
+        grid-gap: 15px;
+    }
+}
