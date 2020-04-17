@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import Country from "./Country";
 import "./style.css";
 import Progressbar from "./Progressbar";
-import Dropdown from "react-dropdown";
-import "react-dropdown/style.css";
+import Select from 'react-select';
+//import "react-dropdown/style.css";
 
 class Countries extends Component {
 
@@ -95,7 +95,7 @@ class Countries extends Component {
         return (
             <div>
                 <div className="sort-filters">
-                    <Dropdown
+                    <Select
                         options={this.state.filters}
                         onChange={(o) => this.onFilterSelect(o)}
                         placeholder="Sory By"

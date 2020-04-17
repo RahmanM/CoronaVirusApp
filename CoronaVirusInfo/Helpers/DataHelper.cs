@@ -6,7 +6,9 @@
 
 using CoronaVirusApp.Data.Entities;
 using CoronaVirusApp.Models;
+using CoronaVirusInfo;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
@@ -18,14 +20,53 @@ using System.Threading.Tasks;
 
 namespace CoronaVirusApp.Helpers
 {
-    public class DataHelper
+    public static class DataHelper
     {
-        private const string API_Base_URL = "https://corona.lmao.ninja/v2";
+        private static string API_Base_URL = "";
+        private static List<Country> Countries { get; set; }
+
+        private static object locker = new object();
+
+        static DataHelper()
+        {
+            API_Base_URL = Startup.BaseApiUrl;
+        }
 
         public static string GetVirusInfoFromAPI()
         {
             string content = RestClientExtensions.Get(new RestClient(API_Base_URL), new RestRequest("countries", (DataFormat)0)).Content;
             return content;
+        }
+
+        public static async Task<IEnumerable<Country>> GetCountriesAsync()
+        {
+            lock (locker)
+            {
+                if (Countries == null)
+                {
+                    Countries = new List<Country>();
+                }
+                else
+                {
+                    return Countries;
+                }
+            }
+
+            string json = (await new RestClient(API_Base_URL).ExecuteAsync<string>(new RestRequest("countries", (DataFormat)0), new CancellationToken())).Content;
+            var countries = await GetCountryInfoListAsync(json);
+
+            lock (locker)
+            {
+                foreach (var country in countries)
+                {
+                    Countries.Add(new Country { Value = country.CountryInfo.Iso2, Label = country.Country });
+                }
+
+                Countries = Countries.OrderBy(s => s.Label).ToList();
+            }
+              
+            return Countries;
+
         }
 
         public static async Task<string> GetVirusInfoFromAPIAsync()

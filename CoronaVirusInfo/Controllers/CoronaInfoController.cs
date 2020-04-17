@@ -26,6 +26,12 @@ namespace CoronaVirusApp.Controllers
             return await DataHelper.GetCountryInfoListAsync(await DataHelper.GetVirusInfoFromAPIAsync());
         }
 
+        [HttpGet("GetCountries")]
+        public async Task<IEnumerable<Country>> GetCountries()
+        {
+            return await DataHelper.GetCountriesAsync();
+        }
+
         [HttpGet("GetSorted")]
         public IEnumerable<CountryCoronaInfo> GetSorted([FromQuery] SieveModel sieveModel, bool filter=false)
         {
