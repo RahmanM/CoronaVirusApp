@@ -18,7 +18,8 @@
     "world-flags-sprite": "^0.0.2",
     "react-chartjs-2": "^2.9.0",
     "lodash": "^4.17.15",
-    "chart.js": "^2.9.3"
+    "chart.js": "^2.9.3",
+    "react-dropdown": "1.7.0"
   },
   "devDependencies": {
     "ajv": "^6.9.1",

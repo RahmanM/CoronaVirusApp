@@ -78,6 +78,11 @@
     grid-gap: 15px;
 }
 
+.Dropdown-root {
+    width: 350px;
+    padding-bottom: 10px;
+}
+
 @media screen and (device-width: 360px) and (device-height: 640px) and (-webkit-device-pixel-ratio: 3) {
     .widget-wrapper {
         display: grid;

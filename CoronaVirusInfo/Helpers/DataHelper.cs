@@ -20,12 +20,11 @@ namespace CoronaVirusApp.Helpers
 {
     public class DataHelper
     {
-        private const string API_Base_URL = "https://corona.lmao.ninja/";
+        private const string API_Base_URL = "https://corona.lmao.ninja/v2";
 
         public static string GetVirusInfoFromAPI()
         {
             string content = RestClientExtensions.Get(new RestClient(API_Base_URL), new RestRequest("countries", (DataFormat)0)).Content;
-            SaveVirusInfo(content);
             return content;
         }
 
@@ -107,18 +106,42 @@ namespace CoronaVirusApp.Helpers
         public static async Task<List<CountryCoronaInfo>> GetCountryInfoListAsync(string infoJson)
         {
             return string.IsNullOrWhiteSpace(infoJson) ? null : await Task.Run(() =>
-          {
-              List<CountryCoronaInfo> countryCoronaInfoList = new List<CountryCoronaInfo>();
-              List<CountryCoronaInfo> list = (JsonConvert.DeserializeObject<List<CountryCoronaInfo>>(infoJson)).OrderByDescending(s => s.Cases.GetValueOrDefault()).ToList();
-              int num = 0;
-              foreach (var countryCoronaInfo in list)
-              {
-                  ++num;
-                  countryCoronaInfo.Rank = num;
-                  countryCoronaInfoList.Add(countryCoronaInfo);
-              }
-              return countryCoronaInfoList;
-          });
+           {
+               List<CountryCoronaInfo> countryCoronaInfoList = new List<CountryCoronaInfo>();
+               List<CountryCoronaInfo> list = (JsonConvert.DeserializeObject<List<CountryCoronaInfo>>(infoJson)).OrderByDescending(s => s.Cases.GetValueOrDefault()).ToList();
+               int num = 0;
+               foreach (var countryCoronaInfo in list)
+               {
+                   ++num;
+                   countryCoronaInfo.Rank = num;
+                   countryCoronaInfoList.Add(countryCoronaInfo);
+               }
+               return countryCoronaInfoList;
+           });
+        }
+
+        public static IQueryable<CountryCoronaInfo> GetCountryInfoQueryableAsync()
+        {
+            var infoJson = GetVirusInfoFromAPI();
+
+            var list =
+                JsonConvert.DeserializeObject<List<CountryCoronaInfo>>(infoJson);
+
+            return list.AsQueryable();
+        }
+
+        public static IEnumerable<CountryCoronaInfo> GetRanked(List<CountryCoronaInfo> countryInfo)
+        {
+            List<CountryCoronaInfo> countryCoronaInfoList = new List<CountryCoronaInfo>();
+
+            int num = 0;
+            foreach (var countryCoronaInfo in countryInfo)
+            {
+                ++num;
+                countryCoronaInfo.Rank = num;
+                countryCoronaInfoList.Add(countryCoronaInfo);
+            }
+            return countryCoronaInfoList;
         }
 
         public static async Task<List<CountryCoronaInfoWrapper>> GetCoronaInfoByCountryByDaysAsync(string countryCode, int numberOfDays)

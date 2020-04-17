@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Sieve.Services;
 
 namespace CoronaVirusInfo
 {
@@ -22,6 +23,8 @@ namespace CoronaVirusInfo
         {
 
             services.AddControllersWithViews();
+
+            services.AddScoped<SieveProcessor>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
