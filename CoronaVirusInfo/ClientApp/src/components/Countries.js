@@ -3,7 +3,7 @@ import Country from "./Country";
 import "./style.css";
 import Progressbar from "./Progressbar";
 import Select from 'react-select';
-//import "react-dropdown/style.css";
+import loaderImage from "./loading.gif"
 
 class Countries extends Component {
 
@@ -78,11 +78,8 @@ class Countries extends Component {
     render() {
         var topCounries = this.state.countries;
 
-        var url =
-            "https://stackblitz.com/files/react-spinner-sample/github/RahmanM/react-spinner-sample/master/loading.gif";
-
         if (!topCounries || topCounries.length <= 0) {
-            return (<Progressbar show={!topCounries || topCounries.length <= 0} imageUrl={url} height="90" width="90" alignment="middle" alttext="Loading..." />);
+            return (<Progressbar show={!topCounries || topCounries.length <= 0} imageUrl={loaderImage} height="90" width="90" alignment="middle" alttext="Loading..." />);
         }
 
         var countries =

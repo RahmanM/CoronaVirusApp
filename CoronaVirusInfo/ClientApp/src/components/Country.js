@@ -58,9 +58,15 @@ class Country extends Component {
                         <span className="number">{this.props.coronaInfo.critical}</span>
                     </div>
                     <div className="info">
-                        <span className="label">Cases per million</span>
+                        <span className="label">Cases/Million</span>
                         <span className="number">
                             {this.props.coronaInfo.casesPerOneMillion}
+                        </span>
+                    </div>
+                    <div className="info">
+                        <span className="label">Death/Million</span>
+                        <span className="number">
+                            {this.props.coronaInfo.deathsPerOneMillion}
                         </span>
                     </div>
                 </div>

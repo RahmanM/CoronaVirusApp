@@ -4,7 +4,7 @@ import { Line, Doughnut } from "react-chartjs-2";
 import _ from "lodash";
 import Progressbar from "./Progressbar"
 import Select from 'react-select';
-//import "react-dropdown/style.css";
+import loaderImage from "./loading.gif"
 
 
 class CountryDetails extends Component {
@@ -278,11 +278,8 @@ class CountryDetails extends Component {
 
         //console.log("render", this.state.country)
 
-        var url =
-            "https://stackblitz.com/files/react-spinner-sample/github/RahmanM/react-spinner-sample/master/loading.gif";
-
         if (!this.state.country || !this.state.country.countryInfo) {
-            return (<Progressbar show={this.state.country} imageUrl={url} height="90" width="90" alignment="middle" alttext="Loading..." />);
+           return (<Progressbar show={this.state.country} imageUrl={loaderImage} height="90" width="90" alignment="middle" alttext="Loading..." />);
         }
 
         return (
