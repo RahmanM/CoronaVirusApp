@@ -13,7 +13,7 @@ class Countries extends Component {
             countries: [],
             filter: '',
             filters: [],
-            selectedFilter: ''
+            selectedFilter: null
         };
     }
 
@@ -65,7 +65,7 @@ class Countries extends Component {
             .then((resp) => resp.json())
             .then((data) => {
                 this.setState({ countries: data });
-                this.setState({ selectedFilter: option.value });
+                this.setState({ selectedFilter: option });
             });
     }
 

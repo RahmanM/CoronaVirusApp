@@ -16,7 +16,7 @@ export class Layout extends Component {
     }
 
     onCountrySearch = (search) => {
-        this.setState({search: search})
+        this.setState({ search: search });
     }
 
     // NB: The way to pass parameter to router without re-creating the whole component is via Render

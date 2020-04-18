@@ -20,7 +20,7 @@ class CountryDetails extends Component {
             country: {},
             donutData: {},
             countriesDropdown: [],
-            selectedCountry: ''
+            selectedCountry: null
         };
     }
 
@@ -28,6 +28,7 @@ class CountryDetails extends Component {
 
         if (this.props.location.state) {
             var countryCode = this.props.location.state.countryCode;
+            //this.setState({ selectedFilter: countryCode });
             this.setChartData(countryCode)
         }
 
@@ -48,7 +49,7 @@ class CountryDetails extends Component {
 
     onCountrySelect(c) {
         this.setChartData(c.value);
-        this.setState({selectedCountry: c.value})
+        this.setState({selectedCountry: c})
     }
 
     setChartData(countryCode) {
@@ -300,8 +301,8 @@ class CountryDetails extends Component {
                         <Select
                             options={this.state.countriesDropdown}
                             onChange={(o) => this.onCountrySelect(o)}
-                            placeholder="Select a country"
                             value={this.state.selectedCountry}
+                            placeholder="Select another country"
                         />
                     </div>
                 </div>
