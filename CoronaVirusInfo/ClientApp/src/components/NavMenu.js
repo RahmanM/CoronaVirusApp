@@ -32,7 +32,7 @@ export class NavMenu extends Component {
                             
                         </div>
                         <NavbarBrand tag={Link} to="/">
-                            <img src={coronaImage} alt="Corona" />
+                            <img className="brand-image" src={coronaImage} alt="Corona" />
                             Corona Virus Info
                         </NavbarBrand>
                         <div className="search-box">

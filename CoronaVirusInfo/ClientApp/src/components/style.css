@@ -16,6 +16,7 @@
     border: solid 1px darkgrey;
     padding: 5px;
     line-height: 1.9em;
+    border-radius: 20px;
 }
 
 
@@ -46,6 +47,10 @@
     color: red;
 }
 
+.warning {
+    color: darkblue;
+}
+
 .recover {
     color: green;
 }
@@ -54,7 +59,7 @@
     box-shadow: 0 10px 20px 0 rgba(0, 0, 0, .16);
 }
 
-.country-detail-info{
+.country-detail-info {
     padding-bottom: 15px;
 }
 
@@ -69,14 +74,16 @@
     vertical-align: bottom;
 }
 
-.chart-widget{
+.chart-widget {
     padding-bottom: 25px;
+    border-radius: 20px;
 }
 
 .widget-wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
     grid-gap: 15px;
+    border-radius: 20px;
 }
 
 .countries-dropdown, .sort-filters {
@@ -90,4 +97,8 @@
         grid-template-columns: repeat(auto-fit, minmax(355px, 1fr));
         grid-gap: 15px;
     }
+}
+
+.css-yk16xz-control,  .form-control {
+    border-radius: 20px !important;
 }

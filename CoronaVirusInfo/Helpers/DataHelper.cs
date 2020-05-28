@@ -1,10 +1,4 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: CoronaVirusApp.Helpers.DataHelper
-// Assembly: CoronaVirusApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 85345770-ED5F-4212-BCB1-607D0DE49AE9
-// Assembly location: C:\temp\CoronaVirusApp.dll
-
-using CoronaVirusApp.Data.Entities;
+﻿using CoronaVirusApp.Data.Entities;
 using CoronaVirusApp.Models;
 using CoronaVirusInfo;
 using Microsoft.EntityFrameworkCore;
@@ -187,34 +181,36 @@ namespace CoronaVirusApp.Helpers
 
         public static async Task<List<CountryCoronaInfoWrapper>> GetCoronaInfoByCountryByDaysAsync(string countryCode, int numberOfDays)
         {
-            return await Task.Run(() =>
-           {
-               List<CountryCoronaInfoWrapper> source = new List<CountryCoronaInfoWrapper>();
-               if (!string.IsNullOrWhiteSpace(countryCode))
-               {
-                   using (CoronaContext coronaContext = new CoronaContext())
-                   {
-                       List<CoronaVirusSummary> list = coronaContext.CoronaVirusSummaries.OrderByDescending(o => o.Date).Take(numberOfDays).ToList();
-                       if (list.Count > 0)
-                       {
-                           foreach (CoronaVirusSummary coronaVirusSummary in list)
-                           {
-                               CountryCoronaInfo countryCoronaInfo = ((IEnumerable<CountryCoronaInfo>)JsonConvert.DeserializeObject<List<CountryCoronaInfo>>(coronaVirusSummary.VirusInfo)).SingleOrDefault(c => c.CountryInfo.Iso2 == countryCode);
-                               if (countryCoronaInfo != null)
-                               {
-                                   CountryCoronaInfoWrapper coronaInfoWrapper = new CountryCoronaInfoWrapper()
-                                   {
-                                       CountryCoronaInfo = countryCoronaInfo,
-                                       Date = coronaVirusSummary.Date.ToString("dd/MM/yy")
-                                   };
-                                   source.Add(coronaInfoWrapper);
-                               }
-                           }
-                       }
-                   }
-               }
-               return source.OrderBy(x => x.Date).ToList();
-           });
+            List<CountryCoronaInfoWrapper> info = await Task.Run(() =>
+              {
+                  List<CountryCoronaInfoWrapper> source = new List<CountryCoronaInfoWrapper>();
+                  if (!string.IsNullOrWhiteSpace(countryCode))
+                  {
+                      using (CoronaContext coronaContext = new CoronaContext())
+                      {
+                          List<CoronaVirusSummary> list = coronaContext.CoronaVirusSummaries.OrderByDescending(o => o.Date).Take(numberOfDays).ToList();
+                          if (list.Count > 0)
+                          {
+                              foreach (CoronaVirusSummary coronaVirusSummary in list)
+                              {
+                                  CountryCoronaInfo countryCoronaInfo = ((IEnumerable<CountryCoronaInfo>)JsonConvert.DeserializeObject<List<CountryCoronaInfo>>(coronaVirusSummary.VirusInfo)).SingleOrDefault(c => c.CountryInfo.Iso2 == countryCode);
+                                  if (countryCoronaInfo != null)
+                                  {
+                                      CountryCoronaInfoWrapper coronaInfoWrapper = new CountryCoronaInfoWrapper()
+                                      {
+                                          CountryCoronaInfo = countryCoronaInfo,
+                                          Date = coronaVirusSummary.Date.ToString("dd/MM/yy")
+                                      };
+                                      source.Add(coronaInfoWrapper);
+                                  }
+                              }
+                          }
+                      }
+                  }
+                  source.Reverse();
+                  return source;
+              });
+            return info;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Sieve.Attributes;
+using System;
 
 namespace CoronaVirusApp.Models
 {
@@ -9,33 +10,60 @@ namespace CoronaVirusApp.Models
         public CountryInfo CountryInfo { get; set; }
 
         [Sieve(CanSort = true, CanFilter = true)]
-        public long? Cases { get; set; }
+        public decimal? Cases { get; set; }
 
         [Sieve(CanSort = true, CanFilter = true)]
-        public long? TodayCases { get; set; }
+        public decimal? TodayCases { get; set; }
 
         [Sieve(CanSort = true, CanFilter = true)]
-        public long? Deaths { get; set; }
+        public decimal? Deaths { get; set; }
 
         [Sieve(CanSort = true, CanFilter = true)]
-        public long? TodayDeaths { get; set; }
+        public decimal? TodayDeaths { get; set; }
 
         [Sieve(CanSort = true, CanFilter = true)]
-        public long? Recovered { get; set; }
+        public decimal? Recovered { get; set; }
 
         [Sieve(CanSort = true, CanFilter = true)]
-        public long? Active { get; set; }
+        public decimal? Active { get; set; }
 
         [Sieve(CanSort = true, CanFilter = true)]
-        public long? Critical { get; set; }
+        public decimal? Critical { get; set; }
 
         [Sieve(CanSort = true, CanFilter = true)]
-        public long? CasesPerOneMillion { get; set; }
+        public decimal? CasesPerOneMillion { get; set; }
 
         [Sieve(CanSort = true, CanFilter = true)]
-        public long? DeathsPerOneMillion { get; set; }
-
-        
+        public decimal? DeathsPerOneMillion { get; set; }
+       
         public int Rank { get; set; }
+
+        [Sieve(CanSort = true, CanFilter = true)]
+        public decimal? PercentRecovered { 
+            get { 
+                var result = Math.Round((Recovered.GetValueOrDefault() / Cases.GetValueOrDefault()) * 100m, 2);
+                return result;
+            }
+        }
+
+        [Sieve(CanSort = true, CanFilter = true)]
+        public decimal? PercentDied
+        {
+            get
+            {
+                var result = Math.Round((Deaths.GetValueOrDefault() / Cases.GetValueOrDefault()) * 100m, 2);
+                return result;
+            }
+        }
+
+        [Sieve(CanSort = true, CanFilter = true)]
+        public decimal? PercentActive
+        {
+            get
+            {
+                var result = Math.Round((Active.GetValueOrDefault() / Cases.GetValueOrDefault()) * 100m, 2);
+                return result;
+            }
+        }
     }
 }

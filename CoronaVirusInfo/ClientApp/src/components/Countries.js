@@ -4,6 +4,7 @@ import "./style.css";
 import Progressbar from "./Progressbar";
 import Select from 'react-select';
 import loaderImage from "./loading.gif"
+import _ from "lodash";
 
 class Countries extends Component {
 
@@ -30,24 +31,32 @@ class Countries extends Component {
     populateFilters() {
 
         var filters = [];
-        filters.push({ value: "Cases", label: "Cases Ascending" });
-        filters.push({ value: "-Cases", label: "Cases Descending" });
-        filters.push({ value: "TodayCases", label: "Today Cases Ascending" });
-        filters.push({ value: "-TodayCases", label: "Today Cases Descending" });
-        filters.push({ value: "Deaths", label: "Deaths Ascending" });
-        filters.push({ value: "-Deaths", label: "Deaths Descending" });
+        filters.push({ value: "Cases", label: "Total Cases Ascending" });
+        filters.push({ value: "-Cases", label: "Total Cases Descending" });
+        filters.push({ value: "TodayCases", label: "Today's Cases Ascending" });
+        filters.push({ value: "-TodayCases", label: "Today's Cases Descending" });
+        filters.push({ value: "Deaths", label: "Total Deaths Ascending" });
+        filters.push({ value: "-Deaths", label: "Total Deaths Descending" });
         filters.push({ value: "TodayDeaths", label: "Today's Deaths Ascending" });
         filters.push({ value: "-TodayDeaths", label: "Today's Deaths Descending" });
-        filters.push({ value: "Recovered", label: "Recovered Ascending" });
-        filters.push({ value: "-Recovered", label: "Recovered Descending" });
-        filters.push({ value: "Active", label: "Active Ascending" });
-        filters.push({ value: "-Active", label: "Active Descending" });
-        filters.push({ value: "Critical", label: "Critical Ascending" });
-        filters.push({ value: "-Critical", label: "Critical Descending" });
+        filters.push({ value: "Recovered", label: "Total Recovered Ascending" });
+        filters.push({ value: "-Recovered", label: "Total Recovered Descending" });
+        filters.push({ value: "Active", label: "Total Active Cases Ascending" });
+        filters.push({ value: "-Active", label: "Total Active Cases Descending" });
+        filters.push({ value: "Critical", label: "Total Critical Cases Ascending" });
+        filters.push({ value: "-Critical", label: "Total Critical Cases Descending" });
         filters.push({ value: "CasesPerOneMillion", label: "Cases Per One Million Ascending" });
         filters.push({ value: "-CasesPerOneMillion", label: "Cases Per One Million Descending" });
         filters.push({ value: "DeathsPerOneMillion", label: "Deaths Per One Million Ascending" });
         filters.push({ value: "-DeathsPerOneMillion", label: "Deaths Per One Million Descending" });
+        filters.push({ value: "PercentDied", label: "Death Percentage Ascending" });
+        filters.push({ value: "-PercentDied", label: "Death Percentage Descending" });
+        filters.push({ value: "PercentRecovered", label: "Recovery Percentage Ascending" });
+        filters.push({ value: "-PercentRecovered", label: "Recovery Percentage Descending" });
+        filters.push({ value: "PercentActive", label: "Active Cases Percentage Ascending" });
+        filters.push({ value: "-PercentActive", label: "Active Cases Percentage Descending" });
+
+        filters = _.orderBy(filters, ['label'], ['asc']);
 
         this.setState({ filters: filters })
     }
